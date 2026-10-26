@@ -20,9 +20,9 @@ spring:
 
 # Datasource (override with environment variables)
   datasource:
-    url: ${DB_URL:jdbc:postgresql://localhost:5432/feedapp}
-    username: ${DB_USERNAME:admin}
-    password: ${DB_PASSWORD:}
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/feedApp}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:admin}
 
 # Common Database Settings
   sql:
