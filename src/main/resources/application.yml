@@ -6,7 +6,7 @@ logging.level:
 # Active Profile
 spring:
   profiles:
-    active: default
+     active: name_of_active_profile
 
 # Banner Text
   banner:
@@ -17,7 +17,19 @@ spring:
   jackson:
     time-zone: America/Toronto
     date-format: "yyyy-MM-dd HH:mm:ss"
-
+# Email Settings
+  mail:
+    username: team1.obsidi@gmail.com
+    password: eavo pjjz gujb ixkb
+    host: smtp.gmail.com
+    port: 587
+    protocol: smtp
+    properties:
+      mail:
+       smtp:
+        auth: true
+        starttls:
+            enable: true
 # Datasource (override with environment variables)
   datasource:
     url: ${DB_URL:jdbc:postgresql://localhost:5432/feedApp}
@@ -25,20 +37,16 @@ spring:
     password: ${DB_PASSWORD:admin}
 
 # Common Database Settings
-  sql:
-    init:
-      continue-on-error: false
-  jpa:
-    show-sql: true
-    open-in-view: false
+sql:
+  init:
+    continue-on-error: false
+jpa:
+  show-sql: true
+  open-in-view: false
+  properties:
+    jakarta.persistence.sharedCache.mode: ENABLE_SELECTIVE
     hibernate:
-      ddl-auto: update
-      naming:
-        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-    properties:
-      jakarta:
-        persistence:
-          sharedCache:
-            mode: ENABLE_SELECTIVE
-      hibernate:
-        '[format_sql]': true
+      format_sql: true
+  hibernate:
+    naming:
+      physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
