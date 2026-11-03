@@ -1,23 +1,25 @@
 # Logger
-logging.level:
-  web: DEBUG
-  '[com.bptn.feedApp]': DEBUG
+logging:
+  level:
+    web: DEBUG
+    '[com.bptn.feedApp]': DEBUG
 
 # Active Profile
 spring:
   profiles:
-     active: name_of_active_profile
+    active: default
 
-# Banner Text
+  # Banner Text
   banner:
     charset: UTF-8
     location: classpath:/banner/academy.txt
 
-# Jackson Settings
+  # Jackson Settings
   jackson:
     time-zone: America/Toronto
     date-format: "yyyy-MM-dd HH:mm:ss"
-# Email Settings
+
+  # Email Settings
   mail:
     username: team1.obsidi@gmail.com
     password: eavo pjjz gujb ixkb
@@ -26,20 +28,16 @@ spring:
     protocol: smtp
     properties:
       mail:
-       smtp:
-        auth: true
-        starttls:
+        smtp:
+          auth: true
+          starttls:
             enable: true
-# Datasource (override with environment variables)
-  datasource:
-    url: ${DB_URL:jdbc:postgresql://localhost:5432/feedApp}
-    username: ${DB_USERNAME:postgres}
-    password: ${DB_PASSWORD:admin}
 
 # Common Database Settings
 sql:
   init:
     continue-on-error: false
+
 jpa:
   show-sql: true
   open-in-view: false
@@ -50,3 +48,76 @@ jpa:
   hibernate:
     naming:
       physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+
+---
+# Default Profile
+spring:
+  config:
+    activate:
+      on-profile: default
+
+  # Database Settings
+  datasource:
+    url: jdbc:postgresql://localhost:5432/feedApp
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:admin}
+    hikari:
+      maximum-pool-size: 2
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+
+---
+# Prod Profile
+server:
+  port: 8080
+
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+  # Database Settings
+  datasource:
+    url: jdbc:postgresql://localhost:5432/feedApp
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:admin}
+    hikari:
+      maximum-pool-size: 2
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+
+---
+# Test Profile
+spring:
+  config:
+    activate:
+      on-profile: test
+
+  sql:
+    init:
+      mode: always
+      continue-on-error: false
+
+  datasource:
+    url: jdbc:h2:mem:testdb
+    username: sa
+    password: sa123#
+    driverClassName: org.h2.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    defer-datasource-initialization: true
+    database-platform: org.hibernate.dialect.H2Dialect
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+      settings:
+        trace: false
+        web-allow-others: true
