@@ -18,7 +18,8 @@ import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.context.SecurityContextHolder;
 import com.bptn.feedApp.exception.domain.UserNotFoundException;
@@ -27,7 +28,7 @@ import org.springframework.http.HttpHeaders;
 
 @Service
 public class UserService {
-	
+	final Logger logger = LoggerFactory.getLogger(this.getClass());
 	@Autowired
 	UserRepository userRepository;
 	@Autowired
@@ -124,4 +125,17 @@ public class UserService {
 
 	    return headers;
 	}
+	
+	public void sendResetPasswordEmail(String emailId) {
+
+		  Optional<User> opt = this.userRepository.findByEmailId(emailId);
+
+		  if (opt.isPresent()) {
+		    this.emailService.sendResetPasswordEmail(opt.get());
+		  } else {
+		    logger.debug("Email doesn't exist, {}", emailId);
+		  }
+		}
 }
+
+
