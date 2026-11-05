@@ -1,4 +1,4 @@
-package com.bptn.feedApp.domain;
+package com.bptn.feedApp.exception.domain;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import org.springframework.http.HttpStatus;
