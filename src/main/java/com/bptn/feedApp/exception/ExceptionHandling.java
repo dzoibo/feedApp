@@ -76,11 +76,6 @@ public class ExceptionHandling implements ErrorController {
 	    return this.createHttpResponse(BAD_REQUEST, ACCOUNT_DISABLED);
 	}
 	
-	@ExceptionHandler(DisabledException.class)
-	public ResponseEntity<HttpResponse> accountDisabledException() {
-	    return this.createHttpResponse(BAD_REQUEST, ACCOUNT_DISABLED);
-	}
-	
 	@ExceptionHandler(BadCredentialsException.class)
 	public ResponseEntity<HttpResponse> badCredentialsException() {
 	    return this.createHttpResponse(BAD_REQUEST, INCORRECT_CREDENTIALS);
