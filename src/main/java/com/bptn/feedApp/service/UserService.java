@@ -106,6 +106,7 @@ public class UserService {
 		    return user;
 		}
 	
+	
 	public User authenticate(User user) {
 
 		   /* Spring Security Authentication. */
@@ -136,6 +137,18 @@ public class UserService {
 		    logger.debug("Email doesn't exist, {}", emailId);
 		  }
 		}
+	
+	public void resetPassword(String password) {
+
+	    String username = SecurityContextHolder.getContext().getAuthentication().getName();
+
+	    User user = this.userRepository.findByUsername(username)
+	                .orElseThrow(() -> new UserNotFoundException(String.format("Username doesn't exist, %s",username)));
+
+	    user.setPassword(this.passwordEncoder.encode(password));
+
+	    this.userRepository.save(user);
+	}
 }
 
 
