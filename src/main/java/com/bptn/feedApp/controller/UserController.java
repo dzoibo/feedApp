@@ -12,12 +12,15 @@ import com.bptn.feedApp.service.UserService;
 import tools.jackson.databind.JsonNode;
 
 import java.util.List;
-import java.util.Optional; 
+import java.util.Optional;
+
+import com.bptn.feedApp.jpa.Profile;
 import com.bptn.feedApp.jpa.User;
 
 import static org.springframework.http.HttpStatus.OK;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+
 
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -119,6 +122,30 @@ public class UserController {
 	    logger.debug("Resetting Password, password: {}", json.get("password").asText());
 
 	    this.userService.resetPassword(json.get("password").asText());
+	}
+	
+	@GetMapping("/get")
+	public User getUser() {
+	      
+	   logger.debug("Getting User Data");
+	      
+	   return this.userService.getUser();
+	}
+	
+	@PostMapping("/update")
+	public User updateUser(@RequestBody User user) {
+	        
+	    logger.debug("Updating User Data");
+	        
+	    return this.userService.updateUser(user);
+	}
+	
+	@PostMapping("/update/profile")
+	public User updateUserProfile(@RequestBody Profile profile) {
+	        
+	    logger.debug("Updating User Profile Data, Profile: {}", profile.toString());
+	        
+	    return this.userService.updateUserProfile(profile);
 	}
 	
 }
